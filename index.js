@@ -165,14 +165,36 @@ inquirer.prompt({
         })
     })
     }
+    // else if (answerData.choice === "Add Departments") {
+    //     connection.query("INSERT INTO department VALUES ();", (error, department) => {
+    //         if (error) {
+    //             console.error('An error occurred while executing the query')
+    //             throw error
+    //         }
+    //         console.table(department)
+    //     })
+    // }
     else if (answerData.choice === "Add Departments") {
-        connection.query("INSERT INTO department VALUES ();", (error, department) => {
+        inquirer.prompt([
+            {
+            type: 'input',
+            name: 'department',
+            message: 'Department name'
+        }
+        
+    ]
+        
+        
+        )
+        .then(answer => {
+        connection.query("INSERT INTO department SET ?;", {name: answer.department}, (error, department) => {
             if (error) {
                 console.error('An error occurred while executing the query')
                 throw error
             }
             console.table(department)
         })
+    })
     }
 
     else if (answerData.choice === "Update Employees Roles") {
