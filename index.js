@@ -112,25 +112,59 @@ inquirer.prompt({
         
         
         )
-        // connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) values ();", (error, employees) => {
-        //     // if (error) {
-        //     //     console.error('An error occurred while executing the query')
-        //     //     throw error
-        //     // }
-        //     console.table(employees)
-        // })
+        .then(answer => {
+        connection.query("INSERT INTO employee SET ?;", {first_name: answer.first_name, last_name: answer.last_name, role_id: answer.role_id, manager_id: answer.manager_id}, (error, employees) => {
+            if (error) {
+                console.error('An error occurred while executing the query')
+                throw error
+            }
+            console.table(employees)
+        })
+    })
     }
 
+    // else if (answerData.choice === "Add Roles") {
+    //     connection.query("INSERT INTO role (title, salary, department_id) VALUES ();", (error, role) => {
+    //         if (error) {
+    //             console.error('An error occurred while executing the query')
+    //             throw error
+    //         }
+    //         console.table(role)
+    //     })
+    // }
+
     else if (answerData.choice === "Add Roles") {
-        connection.query("INSERT INTO role (title, salary, department_id) VALUES ();", (error, role) => {
+        inquirer.prompt([
+            {
+            type: 'input',
+            name: 'title',
+            message: 'Title'
+        },
+        {
+            type: 'input',
+            name: 'salary',
+            message: 'Salary'
+        },
+        {
+            type: 'input',
+            name: 'department_id',
+            message: 'Department id'
+        }
+        
+    ]
+        
+        
+        )
+        .then(answer => {
+        connection.query("INSERT INTO role SET ?;", {title: answer.title, salary: answer.salary, department_id: answer.department_id}, (error, role) => {
             if (error) {
                 console.error('An error occurred while executing the query')
                 throw error
             }
             console.table(role)
         })
+    })
     }
-
     else if (answerData.choice === "Add Departments") {
         connection.query("INSERT INTO department VALUES ();", (error, department) => {
             if (error) {
