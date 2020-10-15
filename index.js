@@ -197,14 +197,48 @@ inquirer.prompt({
     })
     }
 
-    else if (answerData.choice === "Update Employees Roles") {
-        connection.query("UPDATE role SET SET title = answerData, salary =  department_id = 2);", (error, employeeRoles) => {
+    // else if (answerData.choice === "Update Employees Roles") {
+    //     connection.query("UPDATE role SET ?);", (error, employeeRoles) => {
+    //         if (error) {
+    //             console.error('An error occurred while executing the query')
+    //             throw error
+    //         }
+    //         console.table(employeeRoles)
+    //     })
+    // }
+
+    else if (answerData.choice === "Update Employee Roles") {
+        inquirer.prompt([
+            {
+                type: 'input',
+                name: 'title',
+                message: 'Update Title'
+            },
+            {
+                type: 'input',
+                name: 'salary',
+                message: 'Update Salary'
+            },
+            {
+                type: 'input',
+                name: 'department_id',
+                message: 'Update Department id'
+            }
+            
+        
+        
+    ]
+        
+        
+        )
+        .then(answer => {
+        connection.query("INSERT INTO role SET ?;", {title: answer.title, salary: answer.salary, department_id: answer.department_id}, (error, role) => {
             if (error) {
                 console.error('An error occurred while executing the query')
                 throw error
             }
-            console.table(employeeRoles)
+            console.table(role)
         })
+    })
     }
-
 })
